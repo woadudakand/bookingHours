@@ -1,0 +1,15 @@
+.bh-content{
+    display: none;
+}
+
+.bh-content.active{
+    display: block;
+}
+
+#weeksDom button{
+    text-transform: capitalize;
+}
+
+#weeksDom button.active{
+    background: greenyellow;
+}
