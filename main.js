@@ -26,24 +26,28 @@ $(document).ready(function(){
     
     
     $(weeks).each(function(index, el) {        
-        var activeWeek = index === 0 ? "'active'" : null;  
-        // dataObject.push({
-        //     [el]: []
-        // })      
+        var activeWeek = index === 0 ? "'active'" : null;                
         weeksHtml += '<button class='+activeWeek+' data-id="'+el+'" data-key="'+index+'" type="button">'+el+'</button>';        
     });
     $(weeksDom).html(weeksHtml);
 
-    function domManipulation(id, key){
-        const dataHtml = `<div id="${id}-${key}">
-        ${             
-            dataObject[key][id].map(function(data, ind) {                
-                return `<div class="bdb-select-hours bdb_${id}_section" id="${id}ID-${0}">
-                    ${timer(key, ind, id, data)}
-                </div>`;
-            }).join("")
-        }               
-        </div>`;
+    function domManipulation(){
+        var dataHtml = '<div>';
+        $(weeks).each(function(key, id) { 
+            var buttons = $('#weeksDom button');            
+            var activeWeek = $(buttons[key]).hasClass('active') ? "active" : null; 
+            dataHtml += `<div class="isNotVisible ${activeWeek}" id="${id}-${key}">
+            ${             
+                dataObject[key][id].map(function(data, ind) {                
+                    return `<div class="bdb-select-hours bdb_${id}_section" id="${id}ID-${0}">
+                        ${timer(key, ind, id, data)}
+                    </div>`;
+                }).join("")
+            }               
+            </div>`;
+        });
+        dataHtml += '</div>'
+        
 
         $(dataDom).html(dataHtml);
     }
@@ -68,7 +72,7 @@ $(document).ready(function(){
         $(id).addClass('active');
         $(this).addClass('active');
         
-        return domManipulation(id, key);
+        domManipulation();
     });
 
     $('body').on('click', '.bdb-remove', function(){
@@ -76,7 +80,7 @@ $(document).ready(function(){
         var key = $('#weeksDom button.active').attr('data-key');
         var keyDeleted = $(this).attr('data-key');        
         dataObject[key][id] = dataObject[key][id].filter(item => item.id !== parseInt(keyDeleted));        
-        return domManipulation(id, key);        
+        return domManipulation();        
     });
 
     $('body').on('keyup, change', '.start', function(){
@@ -117,8 +121,8 @@ $(document).ready(function(){
         var id = $('#weeksDom button.active').attr('data-id');
         var key = $('#weeksDom button.active').attr('data-key');
         dataObject[key][id].push({start: "", close: "", slots: 1, id: new Date().getTime()});        
-        return domManipulation(id, key);
+        return domManipulation();
     });
-    return domManipulation('monday', 0);
+    return domManipulation();
 });
 }

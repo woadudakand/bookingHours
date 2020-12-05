@@ -13,3 +13,11 @@
 #weeksDom button.active{
     background: greenyellow;
 }
+
+.isNotVisible {
+    display: none;
+}
+
+.isNotVisible.active {
+    display: block;
+}
