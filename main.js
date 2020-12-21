@@ -88,7 +88,7 @@ $(document).ready(function(){
         var key = $('#weeksDom button.active').attr('data-key');
         var keyUpdate = $(this).attr('data-key'); 
         dataObject[key][id].map(item => {
-            if(item.id === parseInt(keyUpdate)){                
+            if(item.id === keyUpdate){                
                 return item.start = $(this).val();
             }
         });        
@@ -99,7 +99,7 @@ $(document).ready(function(){
         var key = $('#weeksDom button.active').attr('data-key');
         var keyUpdate = $(this).attr('data-key'); 
         return dataObject[key][id].map(item => {
-            if(item.id === parseInt(keyUpdate)){
+            if(item.id === keyUpdate){
                 item.close = $(this).val();
             }
         });                
@@ -111,7 +111,7 @@ $(document).ready(function(){
         var keyUpdate = $(this).attr('data-key');
         
         dataObject[key][id].map(item => {
-            if(item.id === parseInt(keyUpdate)){                
+            if(item.id === keyUpdate){                
                 return item.slots = $(this).val();
             }
         });        
@@ -120,7 +120,7 @@ $(document).ready(function(){
     $('#bhAddNew').on('click', function(){
         var id = $('#weeksDom button.active').attr('data-id');
         var key = $('#weeksDom button.active').attr('data-key');
-        dataObject[key][id].push({start: "", close: "", slots: 1, id: new Date().getTime()});        
+        dataObject[key][id].push({start: "", close: "", slots: 1, id: id+"ID-"+dataObject[key][id].length});        
         return domManipulation();
     });
     return domManipulation();
